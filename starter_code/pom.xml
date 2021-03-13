@@ -75,6 +75,8 @@
 					<!-- Force alphabetical order to have a reproducible build -->
 					<runOrder>alphabetical</runOrder>
 					<useSystemClassLoader>false</useSystemClassLoader>
+					<skipTests>true</skipTests>
+
 				</configuration>
 			</plugin>
 		</plugins>
