@@ -33,10 +33,6 @@ public class SareetaApplication extends SpringBootServletInitializer {
 		return builder.sources(SareetaApplication.class);
 	}
 
-	/*@Bean
-	public ServletWebServerFactory servletWebServerFactory() {
-		return new TomcatServletWebServerFactory();
-	}*/
 
 
 

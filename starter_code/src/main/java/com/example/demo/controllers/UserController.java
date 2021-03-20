@@ -52,17 +52,37 @@ public class UserController {
 		User user = new User();
 		user.setUsername(createUserRequest.getUsername());
 		if(!createUserRequest.getConfirmPassword().equals(createUserRequest.getPassword()) || createUserRequest.getPassword().length()<4){
+
+			logger.error("*************************************************");
+			logger.error("*************************************************");
+			logger.error("User can't be created!!!");
+			logger.error("*************************************************");
+			logger.error("*************************************************");
 			return ResponseEntity.badRequest().build();
 
 
 		}
 		user.setPassword(bCryptPasswordEncoder.encode(createUserRequest.getPassword()));
+		logger.info("*************************************************");
+		logger.info("*************************************************");
+		logger.info("User is successful created");
+		logger.info("*************************************************");
+		logger.info("*************************************************");
 		logger.info("requested username:" +createUserRequest.getUsername());
+		logger.info("requested pass:" +createUserRequest.getPassword());
 		Cart cart = new Cart();
 		cartRepository.save(cart);
 		user.setCart(cart);
 		userRepository.save(user);
+		logger.info("*************************************************");
+		logger.info("requested cart ID :" +user.getCart().getId());
+		logger.info("requested cart items :" +user.getCart().getItems());
+		logger.info("requested cart Total :" +user.getCart().getTotal());
+		logger.info("*************************************************");
+
+
 		return ResponseEntity.ok(user);
+
 	}
 	
 }
