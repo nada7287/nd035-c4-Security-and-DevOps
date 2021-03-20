@@ -1,0 +1,133 @@
+Started by user admin
+Running as SYSTEM
+Building in workspace /var/jenkins_home/workspace/E-Commerce-App
+[WS-CLEANUP] Deleting project workspace...
+[WS-CLEANUP] Deferred wipeout is used...
+[WS-CLEANUP] Done
+The recommended git tool is: NONE
+using credential 891a76a9-bca2-4240-90c1-3669cbfe5a26
+Cloning the remote Git repository
+Cloning repository git@github.com:nada7287/nd035-c4-Security-and-DevOps.git
+ > git init /var/jenkins_home/workspace/E-Commerce-App # timeout=10
+Fetching upstream changes from git@github.com:nada7287/nd035-c4-Security-and-DevOps.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.26.2'
+using GIT_SSH to set credentials 
+ > git fetch --tags --force --progress -- git@github.com:nada7287/nd035-c4-Security-and-DevOps.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url git@github.com:nada7287/nd035-c4-Security-and-DevOps.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+Avoid second fetch
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+Checking out Revision 7b1828db7c302f42c41050ecc19700c9a34312e8 (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 7b1828db7c302f42c41050ecc19700c9a34312e8 # timeout=10
+Commit message: "E-commerce App"
+ > git rev-list --no-walk 7b1828db7c302f42c41050ecc19700c9a34312e8 # timeout=10
+[E-Commerce-App] $ mvn -f starter_code/pom.xml clean compile package
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------------< com.example:auth-course >-----------------------
+[INFO] Building auth-course 0.0.1-SNAPSHOT
+[INFO] --------------------------------[ war ]---------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:3.1.0:clean (default-clean) @ auth-course ---
+[INFO] Deleting /var/jenkins_home/workspace/E-Commerce-App/starter_code/target
+[INFO] 
+[INFO] --- maven-resources-plugin:3.2.0:resources (default-resources) @ auth-course ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Using 'UTF-8' encoding to copy filtered properties files.
+[INFO] Copying 1 resource
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.1:compile (default-compile) @ auth-course ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 20 source files to /var/jenkins_home/workspace/E-Commerce-App/starter_code/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:3.2.0:resources (default-resources) @ auth-course ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Using 'UTF-8' encoding to copy filtered properties files.
+[INFO] Copying 1 resource
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.1:compile (default-compile) @ auth-course ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 20 source files to /var/jenkins_home/workspace/E-Commerce-App/starter_code/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:3.2.0:testResources (default-testResources) @ auth-course ---
+[INFO] Not copying test resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.1:testCompile (default-testCompile) @ auth-course ---
+[INFO] Not compiling test sources
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.0.0-M5:test (default-test) @ auth-course ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-war-plugin:3.3.1:war (default-war) @ auth-course ---
+[INFO] Packaging webapp
+[INFO] Assembling webapp [auth-course] in [/var/jenkins_home/workspace/E-Commerce-App/starter_code/target/auth-course-0.0.1-SNAPSHOT]
+[INFO] Processing war project
+[INFO] Building war: /var/jenkins_home/workspace/E-Commerce-App/starter_code/target/auth-course-0.0.1-SNAPSHOT.war
+[INFO] 
+[INFO] --- spring-boot-maven-plugin:2.4.3:repackage (repackage) @ auth-course ---
+[INFO] Replacing main artifact with repackaged archive
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  12.092 s
+[INFO] Finished at: 2021-03-20T17:28:33Z
+[INFO] ------------------------------------------------------------------------
+SSH: Connecting from host [98b65492b0a7]
+SSH: Connecting with configuration [Host_2] ...
+SSH: Creating session: username [host2admin], hostname [172.31.43.51], port [22]
+SSH: Connecting session ...
+SSH: Connected
+SSH: Opening SFTP channel ...
+SSH: SFTP channel open
+SSH: Connecting SFTP channel ...
+SSH: Connected
+SSH: Remote root is not absolute, getting absolute directory from PWD
+SSH: cd [/home/host2admin]
+SSH: OK
+SSH: cd [/opt//docker]
+SSH: OK
+SSH: put [auth-course-0.0.1-SNAPSHOT.war]
+SSH: OK
+SSH: Opening exec channel ...
+SSH: EXEC: channel open
+SSH: EXEC: STDOUT/STDERR from command [docker stop demo_container;  
+docker rm -f demo_container;
+docker stop demo_image;  
+docker rm -f demo_image; 
+docker image rm -f demo_image; 
+cd /opt/docker; 
+docker build -t demo_image .] ...
+SSH: EXEC: connected
+demo_container
+demo_container
+Error response from daemon: No such container: demo_image
+Error: No such container: demo_image
+Untagged: demo_image:latest
+Deleted: sha256:b9ac857ba4d15b1630a596df768e8e92b1875037c8be953cd875afbda280af15
+Deleted: sha256:a58905759414f036e1cb987f6541602c5451f03bdba5ccd7cd540cfa8cf7de70
+Deleted: sha256:0e493f8d586e1fde3a7fc77740ef7a6eb54948817cce66cc3a2f1ef37b888edb
+Sending build context to Docker daemon  42.74MB
+Step 1/3 : From tomcat:8-jre8
+ ---> 3639174793ba
+Step 2/3 : MAINTAINER "Udacity"
+ ---> Running in 486dfa76bcb5
+Removing intermediate container 486dfa76bcb5
+ ---> f81436c20fed
+Step 3/3 : COPY ./*.war /usr/local/tomcat/webapps
+ ---> 265bfd582278
+Successfully built 265bfd582278
+Successfully tagged demo_image:latest
+SSH: EXEC: completed after 2,402 ms
+SSH: Opening exec channel ...
+SSH: EXEC: channel open
+SSH: EXEC: STDOUT/STDERR from command [docker run -d --name demo_container -p 8888:8080 demo_image] ...
+SSH: EXEC: connected
+a3b1021e1e1ba613868b27f3c25bb0e5654e01eb244b3599ce73ff879f049edb
+SSH: EXEC: completed after 802 ms
+SSH: Disconnecting configuration [Host_2] ...
+SSH: Transferred 1 ( 1 + 0 ) file(s)
+Finished: SUCCESS
