@@ -20,8 +20,7 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+
 
     private final static Logger logger= LoggerFactory.getLogger(WebSecurityConfiguration.class);
 
