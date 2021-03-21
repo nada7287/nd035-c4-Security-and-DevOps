@@ -34,9 +34,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             logger.error("*************************************************");
             logger.error("*************************************************");
             throw new UsernameNotFoundException(username);
-        }else{
-            logger.error("user loaded from data base");
-
         }
         return new org.springframework.security.core.userdetails.User(user.getUsername(), bCryptPasswordEncoder.encode(user.getPassword()), Collections.emptyList());
     }

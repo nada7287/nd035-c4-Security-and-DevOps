@@ -58,7 +58,7 @@ public class UserController {
 			logger.error("User can't be created!!!");
 			logger.error("*************************************************");
 			logger.error("*************************************************");
-			return ResponseEntity.badRequest().build();
+			return ResponseEntity.status(401).build();
 
 
 		}

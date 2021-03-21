@@ -62,7 +62,7 @@ import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
                     .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
                     .sign(HMAC512(SecurityConstants.SECRET.getBytes()));
             res.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + token);
-            logger.error("user authentificated");
+            logger.info("user authentificated");
 
         }
     }
