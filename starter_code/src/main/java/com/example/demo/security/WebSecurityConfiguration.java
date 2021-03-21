@@ -1,7 +1,10 @@
 package com.example.demo.security;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -11,8 +14,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+@Configuration
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+
     private final static Logger logger= LoggerFactory.getLogger(WebSecurityConfiguration.class);
 
     private UserDetailsServiceImpl userDetailsService;
@@ -24,16 +32,24 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         try {
-            http.cors().and().csrf().disable().authorizeRequests()
+
+            http.cors().and().csrf().disable()
+                    .exceptionHandling().authenticationEntryPoint(customAuthenticationFailureHandler)
+                    .and()
+                    .authorizeRequests()
                     .antMatchers(HttpMethod.POST, SecurityConstants.SIGN_UP_URL).permitAll()
                     .anyRequest().authenticated()
                     .and()
                     .addFilter(new JWTAuthenticationFilter(authenticationManager()))
                     .addFilter(new JWTAuthenticationVerficationFilter(authenticationManager()))
-                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    ;
+
 
        }catch(Exception e){
             logger.error("*************************************************");
@@ -44,6 +60,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
             throw (e);
         }
     }
+
+
 
     @Override
     @Bean
@@ -81,4 +99,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         }
     }
+
+
+
+
 }

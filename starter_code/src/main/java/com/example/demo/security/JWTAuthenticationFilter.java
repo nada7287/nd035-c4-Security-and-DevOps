@@ -1,38 +1,37 @@
 package com.example.demo.security;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.example.demo.controllers.UserController;
+import com.auth0.jwt.JWT;
+import com.example.demo.model.persistence.User;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.auth0.jwt.JWT;
-import com.example.demo.model.persistence.User;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
 
 import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 
-    public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-        private final static Logger logger= LoggerFactory.getLogger(UserController.class);
+        private final static Logger logger= LoggerFactory.getLogger(JWTAuthenticationFilter.class);
 
         private AuthenticationManager authenticationManager;
 
         public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
             this.authenticationManager = authenticationManager;
         }
+
 
         @Override
         public Authentication attemptAuthentication(HttpServletRequest req,
@@ -47,7 +46,13 @@ import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
                                 credentials.getPassword(),
                                 new ArrayList<>()));
             } catch (IOException e) {
+                res.setStatus(HttpStatus.UNAUTHORIZED.value());
+
                 throw new RuntimeException(e);
+            }catch (AuthenticationException ex) {
+                res.setStatus(HttpStatus.UNAUTHORIZED.value());
+
+                throw (ex);
             }
         }
 
@@ -65,5 +70,10 @@ import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
             logger.info("user authentificated");
 
         }
+
+
+
+
+
     }
 

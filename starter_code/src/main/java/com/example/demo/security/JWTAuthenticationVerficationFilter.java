@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -40,11 +41,13 @@ public class JWTAuthenticationVerficationFilter extends BasicAuthenticationFilte
 
             UsernamePasswordAuthenticationToken authentication = getAuthentication(req);
             SecurityContextHolder.getContext().setAuthentication(authentication);
+
             logger.info("user authentification");
 
             chain.doFilter(req, res);
 
       }catch(IOException ex){
+            res.setStatus(HttpStatus.UNAUTHORIZED.value());
             logger.error("*************************************************");
             logger.error("*************************************************");
             logger.error(ex.getMessage());
@@ -53,6 +56,7 @@ public class JWTAuthenticationVerficationFilter extends BasicAuthenticationFilte
             throw ex;
 
         }catch(ServletException exp){
+            res.setStatus(HttpStatus.UNAUTHORIZED.value());
             logger.error("*************************************************");
             logger.error("*************************************************");
             logger.error(exp.getMessage());
