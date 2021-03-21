@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 
 @Configuration
 @EnableWebSecurity
@@ -36,10 +38,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        try {
+
 
             http.cors().and().csrf().disable()
-                    .exceptionHandling().authenticationEntryPoint(customAuthenticationFailureHandler)
+                    .exceptionHandling()
+                    .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
                     .and()
                     .authorizeRequests()
                     .antMatchers(HttpMethod.POST, SecurityConstants.SIGN_UP_URL).permitAll()
@@ -51,14 +54,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     ;
 
 
-       }catch(Exception e){
-            logger.error("*************************************************");
-            logger.error("*************************************************");
-            logger.error(e.getMessage());
-            logger.error("*************************************************");
-            logger.error("*************************************************");
-            throw (e);
-        }
+
     }
 
 
@@ -66,38 +62,19 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
-       try {
+
             return super.authenticationManagerBean();
 
-        }catch(Exception exp){
 
-            logger.error("*************************************************");
-            logger.error("*************************************************");
-            logger.error(exp.getMessage());
-            logger.error("*************************************************");
-            logger.error("*************************************************");
-            throw(exp);
-
-        }
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        try {
-            auth.parentAuthenticationManager(authenticationManagerBean())
-                    .userDetailsService(userDetailsService)
-                    .passwordEncoder(bCryptPasswordEncoder);
 
-        }catch(Exception exp){
+        auth.userDetailsService(userDetailsService)
+        .passwordEncoder(bCryptPasswordEncoder);
 
-            logger.error("*************************************************");
-            logger.error("*************************************************");
-            logger.error(exp.getMessage());
-            logger.error("*************************************************");
-            logger.error("*************************************************");
-            throw(exp);
 
-        }
     }
 
 
